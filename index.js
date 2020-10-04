@@ -10,6 +10,8 @@ const app = express();
 
 const userRoute = require("./routes/users");
 
+const searchRoute = require("./routes/search");
+
 //extended false so that only fetch JSON files
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -29,6 +31,8 @@ app.use((req, res, next) => {
 });
 
 app.use("/user", userRoute);
+
+app.use("/q", searchRoute);
 
 app.listen(port, (err) => {
   if (err) {

@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
 
-const searchSchema = mongoose.Schema({
-  content: String,
-  date: Date,
-});
+const searchSchema = mongoose.Schema(
+  {
+    content: String,
+  },
+  { timestamps: true }
+);
 
 const userSchema = mongoose.Schema(
   {
