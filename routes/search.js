@@ -6,6 +6,7 @@ const auth = require("../middleware/authCheck");
 
 const searchController = require("../controller/Search");
 
-router.post("/:query", auth, searchController.search);
+router.get("/:query", auth, searchController.search);
+router.get("/history/show", auth, searchController.searchHistory);
 
 module.exports = router;

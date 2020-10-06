@@ -13,6 +13,7 @@ exports.register = (req, res) => {
       if (users.length >= 1) {
         return res.status(409).json({
           message: "User already exists with this email",
+          success: false,
         });
       } else {
         bcrypt.hash(req.body.password, 10, (err, hash) => {
@@ -33,6 +34,8 @@ exports.register = (req, res) => {
                 return res.status(201).json({
                   message: `Hello ${req.body.name} welcome to the crawler`,
                   url: "http://localhost:8000/user/signin",
+                  user: user,
+                  success: true,
                 });
               })
               .catch((err) => {
@@ -61,6 +64,7 @@ exports.signin = (req, res) => {
             console.log(err);
             return res.status(401).json({
               message: "Cannot log In",
+              success: false,
             });
           }
           if (result) {
@@ -77,6 +81,8 @@ exports.signin = (req, res) => {
             return res.status(201).json({
               message: "Logged In Successfully",
               token: token,
+              user: users[0],
+              success: true,
             });
           } else {
             return res.status(401).json({
@@ -85,5 +91,26 @@ exports.signin = (req, res) => {
           }
         });
       }
+    });
+};
+
+exports.all = (req, res) => {
+  User.find()
+    .exec()
+    .then((users) => {
+      const response = {
+        count: users.length,
+        Users: users.map((user) => {
+          return {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+          };
+        }),
+      };
+      return res.status(201).json(response);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };

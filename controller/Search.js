@@ -50,7 +50,7 @@ exports.search = (req, res) => {
                     title: $title.text(),
                     claps: $clap.text(),
                     responses: $responses.text(),
-                    link: $link.attr("href"),
+                    link: "http://localhost:8000/post/" + $link.attr("href"),
                     author: $author.text(),
                     date: $publishDate.text(),
                   };
@@ -59,6 +59,7 @@ exports.search = (req, res) => {
                 return res.status(201).json({
                   message: "History Updated",
                   list: listOfPost,
+                  success: true,
                   // response: text,
                 });
               });
@@ -75,5 +76,27 @@ exports.search = (req, res) => {
           message: "No such user found",
         });
       }
+    });
+};
+exports.searchHistory = (req, res) => {
+  const decoded = jwt.verify(req.headers.authorization, "gocomet");
+
+  User.find({ email: decoded.email })
+    .exec()
+    .then((users) => {
+      console.log(decoded.email);
+      if (users.length >= 1) {
+        return res.status(201).json({
+          success: true,
+          history: users[0].searchHistory,
+        });
+      }
+      return res.status(401).json({
+        success: false,
+        history: "not found",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };
