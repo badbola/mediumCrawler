@@ -50,7 +50,9 @@ exports.search = (req, res) => {
                     title: $title.text(),
                     claps: $clap.text(),
                     responses: $responses.text(),
-                    link: "http://localhost:8000/post/" + $link.attr("href"),
+                    link:
+                      "http://localhost:8000/post/medium.com/p/" +
+                      $link.attr("data-post-id"),
                     author: $author.text(),
                     date: $publishDate.text(),
                   };
