@@ -16,7 +16,7 @@ exports.viewOne = (req, res) => {
         const $ = cheerio.load(text);
         const ele = [];
         const $title = $("section>div>div>div>h1").text();
-        console.log($title);
+        const $author = $("section>div>div>div>div div>span>a").text();
         const $blog = $("article>div>section>div>div>h1,p").text();
 
         var conTag = [];
@@ -30,6 +30,7 @@ exports.viewOne = (req, res) => {
         const contents = {
           title: $title,
           blog: $blog,
+          author: $author,
           tags: conTag,
         };
         ele.push(contents);

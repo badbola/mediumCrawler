@@ -34,7 +34,6 @@ exports.register = (req, res) => {
                 return res.status(201).json({
                   message: `Hello ${req.body.name} welcome to the crawler`,
                   url: "http://localhost:8000/user/signin",
-                  user: user,
                   success: true,
                 });
               })
@@ -81,7 +80,7 @@ exports.signin = (req, res) => {
             return res.status(201).json({
               message: "Logged In Successfully",
               token: token,
-              user: users[0],
+
               success: true,
             });
           } else {

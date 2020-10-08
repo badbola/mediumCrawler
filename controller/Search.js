@@ -86,7 +86,6 @@ exports.searchHistory = (req, res) => {
   User.find({ email: decoded.email })
     .exec()
     .then((users) => {
-      console.log(decoded.email);
       if (users.length >= 1) {
         return res.status(201).json({
           success: true,
